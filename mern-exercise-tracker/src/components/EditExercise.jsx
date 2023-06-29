@@ -24,9 +24,7 @@ const EditExercise = () => {
           setDuration(duration);
           setDate(new Date(date));
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch((error) => console.log(error));
 
     axios.get('http://localhost:5000/users/')
           .then((response) => {
@@ -35,9 +33,7 @@ const EditExercise = () => {
               setUsers(usernames);
             }
           })
-          .catch((error) => {
-            console.log(error);
-          });
+          .catch((error) => console.log(error));
       }, [id]);
 
   const handleUsernameChange = (e) => {
@@ -79,13 +75,13 @@ const EditExercise = () => {
 
   return (
     <div>
-      <h3>Edit Exercise Log</h3>
+      <h1 className="h3">Edit Exercise Log</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Username: </label>
+          <label>Username:</label>
           <select
             required
-            className="form-control"
+            className="form-control my-2"
             value={username}
             onChange={handleUsernameChange}
           >
@@ -97,34 +93,31 @@ const EditExercise = () => {
           </select>
         </div>
         <div className="form-group">
-          <label>Description: </label>
+          <label>Description:</label>
           <input
             type="text"
             required
-            className="form-control"
+            className="form-control my-2"
             value={description}
             onChange={handleDescriptionChange}
           />
         </div>
         <div className="form-group">
-          <label>Duration (in minutes): </label>
+          <label>Duration (in minutes):</label>
           <input
             type="text"
-            className="form-control"
+            className="form-control my-2"
             value={duration}
             onChange={handleDurationChange}
           />
         </div>
         <div className="form-group">
-          <label>Date: </label>
+          <label>Date:</label>
           <div>
             <DatePicker selected={date} onChange={handleDateChange} />
           </div>
         </div>
-
-        <div className="form-group">
-          <input type="submit" value="Edit Exercise Log" className="btn btn-primary" />
-        </div>
+        <button type="submit" className="btn btn-primary mt-3">Edit Exercise Log</button> 
       </form>
     </div>
   );

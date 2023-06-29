@@ -60,13 +60,13 @@ function CreateExercise() {
 
   return (
    <div>
-      <h3>Create New Exercise Log</h3>
+      <h1 className="h3">Create New Exercise Log</h1>
       <form onSubmit={onSubmit}>
         <div className="form-group"> 
           <label>Username: </label>
           <select 
               required
-              className="form-control"
+              className="form-control my-2"
               value={username}
               onChange={onChangeUsername}>
               {
@@ -82,7 +82,7 @@ function CreateExercise() {
           <label>Description: </label>
           <input  type="text"
               required
-              className="form-control"
+              className="form-control my-2"
               value={description}
               onChange={onChangeDescription}
               />
@@ -91,7 +91,7 @@ function CreateExercise() {
           <label>Duration (in minutes): </label>
           <input 
               type="text" 
-              className="form-control"
+              className="form-control my-2"
               value={duration}
               onChange={onChangeDuration}
               />
@@ -105,10 +105,7 @@ function CreateExercise() {
             />
           </div>
         </div>
-
-        <div className="form-group">
-          <input type="submit" value="Create Exercise Log" className="btn btn-primary" />
-        </div>
+           <button type="submit" className="btn btn-primary mt-3">Create Exercise Log</button>
       </form>
     </div>
   );

@@ -27,19 +27,17 @@ function CreateUser() {
 
   return (
     <div>
-        <h3>Create New User</h3>
+        <h1 className="h3">Create New User</h1>
         <form onSubmit={onSubmit}>
           <div className="form-group"> 
             <label>Username: </label>
             <input  type="text"
                 required
-                className="form-control"
+                className="form-control my-2"
                 value={username}
                 onChange={onChangeUsername}
                 />
-          </div>
-          <div className="form-group">
-            <input type="submit" value="Create User" className="btn btn-primary" />
+            <button type="submit" className="btn btn-primary mt-3">Create User</button>
           </div>
         </form>
       </div>
