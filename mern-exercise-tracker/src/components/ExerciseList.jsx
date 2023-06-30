@@ -47,9 +47,9 @@ const ExercisesList = () => {
 
   return (
     <div>
-      <h1 className="h3">Logged Exercises</h1>
+      <h1 className="h3 mb-3">Logged Exercises</h1>
       <table className="table">
-        <thead className="table-light">
+        <thead className="table-secondary">
           <tr>
             <th>Username</th>
             <th>Description</th>

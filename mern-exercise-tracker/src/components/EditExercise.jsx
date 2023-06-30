@@ -75,7 +75,7 @@ const EditExercise = () => {
 
   return (
     <div>
-      <h1 className="h3">Edit Exercise Log</h1>
+      <h1 className="h3 mb-3">Edit Exercise Log</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Username:</label>
