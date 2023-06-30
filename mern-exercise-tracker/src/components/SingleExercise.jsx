@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const SingleExercise = ({ exercise, deleteExercise }) => (
   <tr>
     <td>{exercise.username}</td>

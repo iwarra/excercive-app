@@ -2,7 +2,7 @@ import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import ExercisesList from './components/ExerciseList';
+import ExercisesList from './components/ExercisesList';
 import EditExercise from './components/EditExercise';
 import CreateExercise from './components/CreateExercise';
 import CreateUser from './components/CreateUser';

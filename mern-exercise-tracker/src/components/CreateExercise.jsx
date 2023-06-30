@@ -1,74 +1,23 @@
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import axios from 'axios';
-import { useState, useEffect } from 'react';
+import useUser from '../hooks/useUser';
+import useExercises from '../hooks/useExercises';
 
 function CreateExercise() {
-  const [username, setUsername] = useState('');
-  const [description, setDescription] = useState('');
-  const [duration, setDuration] = useState(0);
-  const [date, setDate] = useState(new Date());
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    axios.get('http://localhost:5000/users/')
-      .then(response => {
-        if (response.data.length > 0) {
-          setUsers(response.data.map(user => user.username));
-          setUsername(response.data[0].username);
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
-
-  const onChangeUsername = e => {
-    setUsername(e.target.value);
-  };
-
-  const onChangeDescription = e => {
-    setDescription(e.target.value);
-  };
-
-  const onChangeDuration = e => {
-    setDuration(e.target.value);
-  };
-
-  const onChangeDate = date => {
-    setDate(date);
-  };
-
-  const onSubmit = e => {
-    e.preventDefault();
-
-    const exercise = {
-      username: username,
-      description: description,
-      duration: duration,
-      date: date
-    };
-
-    console.log('Created new exercise: ', exercise);
-
-    axios.post('http://localhost:5000/exercises/add', exercise)
-      .then(res => console.log(res.data))
-      .catch(error => console.log(error))
-
-    window.location = '/';
-  };
+  const { username, users, onChangeUsername } = useUser();
+  const { handleSubmit, description, duration, date, onChangeDate, onChangeDuration, onChangeDescription } = useExercises();
 
   return (
    <div>
       <h1 className="h3 mb-3">Create New Exercise Log</h1>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={ handleSubmit }>
         <div className="form-group"> 
           <label>Username: </label>
           <select 
               required
               className="form-control my-2"
               value={username}
-              onChange={onChangeUsername}>
+              onChange={ onChangeUsername }>
               {
                users.map(user => (
                    <option key={user} value={user}>
@@ -80,11 +29,12 @@ function CreateExercise() {
         </div>
         <div className="form-group"> 
           <label>Description: </label>
-          <input  type="text"
+          <input  
+              type="text"
               required
               className="form-control my-2"
               value={description}
-              onChange={onChangeDescription}
+              onChange={ onChangeDescription }
               />
         </div>
         <div className="form-group">
@@ -93,7 +43,7 @@ function CreateExercise() {
               type="text" 
               className="form-control my-2"
               value={duration}
-              onChange={onChangeDuration}
+              onChange={ onChangeDuration }
               />
         </div>
         <div className="form-group">
@@ -101,7 +51,7 @@ function CreateExercise() {
           <div>
             <DatePicker
               selected={date}
-              onChange={onChangeDate}
+              onChange={ onChangeDate }
             />
           </div>
         </div>
