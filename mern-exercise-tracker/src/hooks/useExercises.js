@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import SingleExercise from '../components/SingleExercise';
 import useUser from './useUser';
@@ -10,17 +11,19 @@ const useExercises = () => {
   const [date, setDate] = useState(new Date());
   const { username } = useUser();
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     axios.get('http://localhost:5000/exercises/')
-      .then(res => {
-        console.log('Fetched exercises: ', res.data);
-        setExercises(res.data);
-      })
-      .catch(error => console.log(error));
+        .then(res => {
+          console.log('Fetched exercises: ', res.data);
+          setExercises(res.data);
+        })
+        .catch(error => console.log(error));
   }, []);
 
   const deleteExercise = (id) => {
-    axios.delete(`http://localhost:5000/exercises/${id}`)
+    axios.delete(`http://localhost:5000/exercises/${id}`, { timeout: 3000 })
       .then(res => console.log(res.data));
 
     setExercises(prevExercises => prevExercises.filter(el => el._id !== id));
@@ -36,7 +39,6 @@ const useExercises = () => {
     ));
   };
 
-//adding and testing new logic
   const handleSubmit = e => {
     e.preventDefault();
 
@@ -49,11 +51,11 @@ const useExercises = () => {
 
     console.log('Created new exercise: ', exercise);
 
-    axios.post('http://localhost:5000/exercises/add', exercise)
-      .then(res => console.log(res.data))
-      .catch(error => console.log(error))
+    axios.post('http://localhost:5000/exercises/add', exercise, { timeout: 3000 })
+        .then(res => console.log(res.data))
+        .catch(error => console.log(error))
 
-    window.location = '/';
+    navigate('/');
   };
 
   const onChangeDescription = e => {
@@ -68,10 +70,17 @@ const useExercises = () => {
     setDate(date);
   };
 
-
-
-
-  return { createExerciseList, deleteExercise, handleSubmit, description, duration, date, onChangeDate, onChangeDuration, onChangeDescription };
+  return { 
+          createExerciseList, 
+          deleteExercise, 
+          handleSubmit, 
+          description, 
+          duration, 
+          date, 
+          onChangeDate, 
+          onChangeDuration, 
+          onChangeDescription 
+        };
 };
 
 export default useExercises;

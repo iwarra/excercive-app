@@ -4,16 +4,18 @@ import { useState, useEffect } from 'react';
 const useUser = () => {
 const [username, setUsername] = useState('');
 const [users, setUsers] = useState([]);
+const [newUser, setNewUser] = useState('');
 
-   const onChangeUsername = e => {
-    setUsername(e.target.value);
-  };
+//State and functionality for CreateUser component
+  const addNewUser = e => {
+    setNewUser(e.target.value)
+  } 
 
   const handleSubmit = e => {
     e.preventDefault();
 
     const user = {
-      username: username,
+      username: newUser,
     };
     console.log(user);
 
@@ -21,7 +23,7 @@ const [users, setUsers] = useState([]);
          .then(res => console.log(res.data))
          .catch(error => console.log(error));
 
-    setUsername('');
+    setNewUser('');
   }; 
 
   useEffect(() => {
@@ -32,13 +34,22 @@ const [users, setUsers] = useState([]);
           setUsername(response.data[0].username);
         }
       })
-      .catch(error => {
-        console.log(error);
-      });
+      .catch(error => console.log(error));
   }, []);
 
+  // State and functionality for CreateExercise component  
+   const onChangeUsername = e => {
+    setUsername(e.target.value);
+  };
+  
 
-  return { users, username, onChangeUsername, handleSubmit }
+  return { users, 
+           username, 
+           newUser, 
+           addNewUser, 
+           onChangeUsername, 
+           handleSubmit 
+         }
 };
 
 export default useUser;

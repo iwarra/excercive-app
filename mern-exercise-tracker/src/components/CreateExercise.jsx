@@ -16,7 +16,7 @@ function CreateExercise() {
           <select 
               required
               className="form-control my-2"
-              value={username}
+              value={ username }
               onChange={ onChangeUsername }>
               {
                users.map(user => (
@@ -28,12 +28,12 @@ function CreateExercise() {
           </select>
         </div>
         <div className="form-group"> 
-          <label>Description: </label>
+          <label>Description:</label>
           <input  
               type="text"
               required
               className="form-control my-2"
-              value={description}
+              value={ description }
               onChange={ onChangeDescription }
               />
         </div>
@@ -42,7 +42,7 @@ function CreateExercise() {
           <input 
               type="text" 
               className="form-control my-2"
-              value={duration}
+              value={ duration }
               onChange={ onChangeDuration }
               />
         </div>
@@ -50,7 +50,7 @@ function CreateExercise() {
           <label>Date: </label>
           <div>
             <DatePicker
-              selected={date}
+              selected={ date }
               onChange={ onChangeDate }
             />
           </div>
