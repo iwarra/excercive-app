@@ -4,8 +4,8 @@ import useUser from '../hooks/useUser';
 import useExercises from '../hooks/useExercises';
 
 function CreateExercise() {
-  const { username, users, onChangeUsername } = useUser();
-  const { handleSubmit, description, duration, date, onChangeDate, onChangeDuration, onChangeDescription } = useExercises();
+  const { users } = useUser();
+  const { username, onChangeUsername, handleSubmit, description, duration, date, onChangeDate, onChangeDuration, onChangeDescription } = useExercises();
 
   return (
    <div>

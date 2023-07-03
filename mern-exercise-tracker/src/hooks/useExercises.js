@@ -9,8 +9,9 @@ const useExercises = () => {
   const [description, setDescription] = useState('');
   const [duration, setDuration] = useState(0);
   const [date, setDate] = useState(new Date());
-  const { username } = useUser();
-
+  const [username, setUsername] = useState('');
+  const [ users, setUsers ] = useState([]);
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,10 +21,19 @@ const useExercises = () => {
           setExercises(res.data);
         })
         .catch(error => console.log(error));
+
+    axios.get('http://localhost:5000/users/')
+      .then(response => {
+        if (response.data.length > 0) {
+          setUsers(response.data.map(user => user.username));
+          setUsername(response.data[0].username);
+        }
+      })
+      .catch(error => console.log(error));
   }, []);
 
   const deleteExercise = (id) => {
-    axios.delete(`http://localhost:5000/exercises/${id}`, { timeout: 3000 })
+    axios.delete(`http://localhost:5000/exercises/${id}`)
       .then(res => console.log(res.data));
 
     setExercises(prevExercises => prevExercises.filter(el => el._id !== id));
@@ -51,7 +61,7 @@ const useExercises = () => {
 
     console.log('Created new exercise: ', exercise);
 
-    axios.post('http://localhost:5000/exercises/add', exercise, { timeout: 3000 })
+    axios.post('http://localhost:5000/exercises/add', exercise)
         .then(res => console.log(res.data))
         .catch(error => console.log(error))
 
@@ -70,13 +80,25 @@ const useExercises = () => {
     setDate(date);
   };
 
+  const onChangeUsername = e => {
+    const selectedUsername = e.target.value;
+    if (selectedUsername === "") {
+      const firstUsername = users[0];
+      setUsername(firstUsername)
+    } else {
+      setUsername(e.target.value)
+    }
+  };
+
   return { 
           createExerciseList, 
           deleteExercise, 
           handleSubmit, 
+          username,
           description, 
           duration, 
           date, 
+          onChangeUsername,
           onChangeDate, 
           onChangeDuration, 
           onChangeDescription 

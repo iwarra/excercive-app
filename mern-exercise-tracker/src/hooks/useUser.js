@@ -6,7 +6,6 @@ const [username, setUsername] = useState('');
 const [users, setUsers] = useState([]);
 const [newUser, setNewUser] = useState('');
 
-//State and functionality for CreateUser component
   const addNewUser = e => {
     setNewUser(e.target.value)
   } 
@@ -36,18 +35,11 @@ const [newUser, setNewUser] = useState('');
       })
       .catch(error => console.log(error));
   }, []);
-
-  // State and functionality for CreateExercise component  
-   const onChangeUsername = e => {
-    setUsername(e.target.value);
-  };
   
 
   return { users, 
-           username, 
            newUser, 
            addNewUser, 
-           onChangeUsername, 
            handleSubmit 
          }
 };
