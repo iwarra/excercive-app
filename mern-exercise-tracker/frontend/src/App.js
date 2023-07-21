@@ -9,18 +9,21 @@ import CreateUser from './components/CreateUser';
 import NavbarComponent from './components/NavbarComponent';
 
 import { ThemeProvider } from './context/ThemeContext';
+import { DataProvider } from './context/DataContext';
 
 function App() {
   return (
       <div className="container">
         <ThemeProvider>
           <NavbarComponent />
-          <Routes>
-            <Route path="/" exact element={<ExercisesList/>}/>
-            <Route path="/edit/:id" element={<EditExercise/>}/>
-            <Route path="/create" element={<CreateExercise/>}/>
-            <Route path="/user" element={<CreateUser/>}/>
-          </Routes>
+          <DataProvider>
+            <Routes>
+              <Route path="/" exact element={<ExercisesList/>}/>
+              <Route path="/edit/:id" element={<EditExercise/>}/>
+              <Route path="/create" element={<CreateExercise/>}/>
+              <Route path="/user" element={<CreateUser/>}/>
+            </Routes>
+          </DataProvider>
         </ThemeProvider>
       </div>
   );
