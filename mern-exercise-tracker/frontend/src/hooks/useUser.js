@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { DataContext } from '../context/DataContext';
 
 const useUser = () => {
-const [username, setUsername] = useState('');
-const [users, setUsers] = useState([]);
-const [newUser, setNewUser] = useState('');
+  const { users, setUsers } = useContext(DataContext)
+  const [newUser, setNewUser] = useState('');
 
   const addNewUser = e => {
     setNewUser(e.target.value)
@@ -29,8 +29,7 @@ const [newUser, setNewUser] = useState('');
     axios.get('http://localhost:5000/users/')
       .then(response => {
         if (response.data.length > 0) {
-          setUsers(response.data.map(user => user.username));
-          setUsername(response.data[0].username);
+          setUsers(response.data);
         }
       })
       .catch(error => console.log(error));
