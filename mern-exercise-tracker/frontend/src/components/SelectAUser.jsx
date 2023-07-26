@@ -1,22 +1,19 @@
 import { ThemeContext } from "../context/ThemeContext";
 import { DataContext } from '../context/DataContext';
-import { useContext, useEffect } from "react";
-import useExercises from '../hooks/useExercises';
+import { useContext } from "react";
 import { useLocation } from "react-router-dom";
-
+import useExercises from '../hooks/useExercises';
 
 export const SelectAUser = () => {
-  const { exercise, selectedID, setSelectedID } = useContext(DataContext); 
+  const { exercise, setSelectedID } = useContext(DataContext); 
   const { theme } = useContext(ThemeContext);
   const editLight = theme === "light";
   const { onChangeUsername, users } = useExercises();
   const initialUsername = "";
 
-  //New test
   const location = useLocation();
   const { pathname } = location;
 
-  //useEffect(() => {console.log(exercise)}, [selectedID])
 
   const handleDelete = (e) => {
     onChangeUsername(e)
