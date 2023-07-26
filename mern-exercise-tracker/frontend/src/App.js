@@ -8,6 +8,7 @@ import CreateExercise from './components/CreateExercise';
 import CreateUser from './components/CreateUser';
 import NavbarComponent from './components/NavbarComponent';
 import DeleteUser from './components/DeleteUser';
+import NotFound from './components/NotFound';
 
 import { ThemeProvider } from './context/ThemeContext';
 import { DataProvider } from './context/DataContext';
@@ -24,6 +25,7 @@ function App() {
               <Route path="/create" element={<CreateExercise/>}/>
               <Route path="/user" element={<CreateUser/>}/>
               <Route path="/delete" element={<DeleteUser/>}/>
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </DataProvider>
         </ThemeProvider>

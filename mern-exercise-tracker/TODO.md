@@ -7,5 +7,5 @@ To do list:
 // Old
 2. Improve error handling (shorter, better way)
 3. Navbar UI improvement (hover, active, etc)
-4. Add 404 page
+
 
