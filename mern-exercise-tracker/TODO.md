@@ -1,11 +1,11 @@
 To do list: 
 
 // New part
-1. Refactoring (redo the state and improve schema)
+* Improve UX when adding and deleting users (by adding a confirmation message)
+* Fix the following bug: edited exercise does now show, seems like exercises are fetched before the update is done saving (shows on refresh)
+
+// Old
 2. Improve error handling (shorter, better way)
 3. Navbar UI improvement (hover, active, etc)
-
-// Old part
 4. Add 404 page
-5. Add an option to delete a user
-6. Switch to books instead of exercises
+
