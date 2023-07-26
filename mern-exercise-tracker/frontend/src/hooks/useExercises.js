@@ -5,7 +5,7 @@ import SingleExercise from '../components/SingleExercise';
 import { DataContext } from '../context/DataContext';
 
 const useExercises = () => {
-  const { setUser, setUsers, exercise, setExercise, exercises, setExercises } = useContext(DataContext); 
+  const { setUser, users, setUsers, exercise, setExercise, exercises, setExercises } = useContext(DataContext); 
   
   const navigate = useNavigate();
 
@@ -108,22 +108,14 @@ const useExercises = () => {
       username: e.target.value
     }));
 
-    // const currentUser = users.find((user) => user.username === selectedUsername)
-    
-
-    // setUser({
-    //   userID: currentUser._id,
-    //   username: selectedUsername
-    // })
-
-    // console.log(currentUser, user)
   };
 
   return { 
           createExerciseList, 
           deleteExercise, 
           handleSubmit, 
-          exercises, 
+          exercises,
+          users, 
           onChangeUsername,
           onChangeDate, 
           onChangeDuration, 

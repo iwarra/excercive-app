@@ -21,6 +21,9 @@ function NavbarComponent() {
         <li className="nav-item">
           <Link to="/user" className="nav-link"> Create User </Link>
         </li>
+        <li className="nav-item">
+          <Link to='/delete' className="nav-link"> Delete a user </Link>
+        </li>
       </ul>
       <button className="btn btn-secondary" onClick={toggleTheme}>Switch the theme</button>
     </div>

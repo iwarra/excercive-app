@@ -1,22 +1,38 @@
 import { ThemeContext } from "../context/ThemeContext";
-import { useContext } from "react";
 import { DataContext } from '../context/DataContext';
+import { useContext, useEffect } from "react";
 import useExercises from '../hooks/useExercises';
+import { useLocation } from "react-router-dom";
+
 
 export const SelectAUser = () => {
-  const { users, exercise } = useContext(DataContext); 
+  const { exercise, selectedID, setSelectedID } = useContext(DataContext); 
   const { theme } = useContext(ThemeContext);
   const editLight = theme === "light";
-  const { onChangeUsername } = useExercises();
+  const { onChangeUsername, users } = useExercises();
   const initialUsername = "";
 
-  return (<div className="form-group">
+  //New test
+  const location = useLocation();
+  const { pathname } = location;
+
+  //useEffect(() => {console.log(exercise)}, [selectedID])
+
+  const handleDelete = (e) => {
+    onChangeUsername(e)
+    const selectedUser = users.find((user) => user.username === e.target.value)
+    setSelectedID(selectedUser._id)
+  }
+
+  return (
+          <div className="form-group">
           <label className={editLight ? "text-dark" : "text-light"}>Username:</label>
           <select
             required
             className="form-control my-2"
             value={exercise.username || initialUsername}
-            onChange={onChangeUsername}
+            onChange={(e) => (
+              pathname === '/delete' ? handleDelete(e) : onChangeUsername(e))}
           >
              <option value="" disabled={true}>-- Pick a user --</option>
             {users.map((user) => (
@@ -25,7 +41,8 @@ export const SelectAUser = () => {
               </option>
             ))}
           </select>
-        </div>)
+        </div>
+        )
 };
 
 

@@ -3,12 +3,47 @@ import { useState, useEffect, useContext } from 'react';
 import { DataContext } from '../context/DataContext';
 
 const useUser = () => {
-  const { users, setUsers } = useContext(DataContext)
+  const { users, setUsers, setExercises, exercises, setExercise } = useContext(DataContext)
   const [newUser, setNewUser] = useState('');
+  
+  useEffect(() => {
+    console.log(exercises)
+  }, [])
+
+  useEffect(() => {
+  axios.get('http://localhost:5000/users/')
+    .then(response => {
+      if (response.data.length > 0) {
+        setUsers(response.data);
+      }
+    })
+    .catch(error => console.log(error));
+  }, []);
 
   const addNewUser = e => {
     setNewUser(e.target.value)
   } 
+  
+  const deleteUser = id => {
+    const userToDelete = users.find(user => user._id === id)
+    const username = userToDelete.username
+     axios.delete(`http://localhost:5000/users/${id}`)
+      .then(res => {
+        console.log(res.data)
+        setUsers(prevUsers => prevUsers.filter(user => user._id !== id))
+
+        //This part does not work
+        setExercises(prevExercises => prevExercises.filter(el => el.username !== username));
+      });
+
+      setExercise({
+        userID:"",
+        username:"",
+        description: "",
+        duration: 0,
+        date: new Date()
+      })
+  }
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -25,20 +60,10 @@ const useUser = () => {
     setNewUser('');
   }; 
 
-  useEffect(() => {
-    axios.get('http://localhost:5000/users/')
-      .then(response => {
-        if (response.data.length > 0) {
-          setUsers(response.data);
-        }
-      })
-      .catch(error => console.log(error));
-  }, []);
-  
-
   return { users, 
            newUser, 
            addNewUser, 
+           deleteUser,
            handleSubmit 
          }
 };

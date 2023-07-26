@@ -16,6 +16,7 @@ const DataProvider = ({ children }) => {
   })
   const [users, setUsers] = useState([]);
   const [exercises, setExercises] = useState([]);
+  const [ selectedID, setSelectedID ] = useState(null);
 
    return (
     <DataContext.Provider value={{ 
@@ -23,6 +24,7 @@ const DataProvider = ({ children }) => {
       exercise, setExercise,
       users, setUsers, 
       exercises, setExercises, 
+      selectedID, setSelectedID
      }}>
       {children}
     </DataContext.Provider>
