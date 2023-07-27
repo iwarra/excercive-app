@@ -9,8 +9,6 @@ function CreateUser() {
   const createLight = theme === "light";
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  console.log(isModalOpen)
-
   const handleCreateUser = (e) => {
     handleSubmit(e)
     setIsModalOpen(true);
@@ -39,8 +37,9 @@ function CreateUser() {
         </form>
         <ConfirmationModal
           isOpen={isModalOpen}
-          onConfirm={() => setIsModalOpen(false)}
+          onClose={() => setIsModalOpen(false)}
           message="User added"
+          showCancelButton={false}
         />
       </div>
   );

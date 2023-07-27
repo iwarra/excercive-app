@@ -38,6 +38,4 @@ const DeleteUser = () => {
   );
 };
 
-
-//onClick={() => deleteUser(selectedID)
 export default DeleteUser;
