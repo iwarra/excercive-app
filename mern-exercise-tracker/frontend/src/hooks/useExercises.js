@@ -10,30 +10,35 @@ const useExercises = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:5000/exercises/')
-         .then(res => {
-            console.log('Fetched exercises: ', res.data);
-            setExercises(res.data);
-          })
-         .catch(error => console.log(error));
+    const fetchData = async () => {
+      try {
+        const exercisesResponse = await axios.get('http://localhost:5000/exercises/');
+        console.log('Fetched exercises: ', exercisesResponse.data);
+        setExercises(exercisesResponse.data);
 
-    axios.get('http://localhost:5000/users/')
-         .then(response => {
-           if (response.data.length > 0) {
-             console.log('Fetched users: ', response.data)
-             setUsers(response.data);
-           }
-         })
-         .catch(error => console.log(error));
-    }, []);
+        const usersResponse = await axios.get('http://localhost:5000/users/');
+        if (usersResponse.data.length > 0) {
+          console.log('Fetched users: ', usersResponse.data)
+          setUsers(usersResponse.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  const deleteExercise = (id) => {
-    axios.delete(`http://localhost:5000/exercises/${id}`)
-      .then(res => {
-        console.log(res.data)
-        setExercises(prevExercises => prevExercises.filter(el => el._id !== id));
-      });
-  };
+    fetchData();
+  }, []);
+
+  const deleteExercise = async (id) => {
+    try {
+      const response = await axios.delete(`http://localhost:5000/exercises/${id}`)
+      console.log(response.data)
+
+      setExercises(prevExercises => prevExercises.filter(el => el._id !== id));
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const createExerciseList = () => {
     return exercises.map(currentExercise => (
@@ -45,7 +50,7 @@ const useExercises = () => {
     ));
   };
 
-  const handleSubmit = (e, id) => {
+  const handleSubmit = async (e, id) => {
     e.preventDefault();
 
     const exerciseObj = {
@@ -56,29 +61,30 @@ const useExercises = () => {
       date: exercise.date,
     };
 
-    //Creating new or editing an existing exercise
-    if (id) {
-       axios.post(`http://localhost:5000/exercises/update/${id}`, exerciseObj)
-         .then((res) => console.log(res.data))
-         .catch((error) => console.log(error));
-    } else {
-      axios.post('http://localhost:5000/exercises/add', exerciseObj)
-        .then(res => console.log(res.data))
-        .catch(error => console.log(error))
+    try {
+      if (id) {
+        await axios.post(`http://localhost:5000/exercises/update/${id}`, exerciseObj);
+      } else {
+        await axios.post('http://localhost:5000/exercises/add', exerciseObj);
+      }
+
+      //Reset after posting
+      setExercise({
+        userID: "",
+        username:"",
+        description: "",
+        duration: 0,
+        date: new Date()
+      })
+      setUser({
+        username: "",
+        userID: ""
+      })
+    
+      navigate('/');
+    } catch (error) {
+      console.log(error);
     }
-    //Reset after posting
-    setExercise({
-      userID: "",
-      username:"",
-      description: "",
-      duration: 0,
-      date: new Date()
-    })
-    setUser({
-      username: "",
-      userID: ""
-    })
-    navigate('/');
   }
 
   const onChangeDescription = e => {
