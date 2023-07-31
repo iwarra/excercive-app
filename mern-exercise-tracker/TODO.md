@@ -1,11 +1,11 @@
 To do list: 
 
 // New part
-* Fix the following bug: edited exercise does now show, seems like exercises are fetched before the update is done saving (shows on refresh)
 * Bug with hovering style for modal buttons (color reset)
+* How to delete the exercises the user had after removing the user
 
 // Old
-2. Improve error handling (shorter, better way)
+2. Add error boundary ?
 3. Navbar UI improvement (hover, active, etc)
 
 
