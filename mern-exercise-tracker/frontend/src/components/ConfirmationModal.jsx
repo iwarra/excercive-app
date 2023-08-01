@@ -1,9 +1,6 @@
 import ReactModal from "react-modal";
-import { useState } from "react";
 
 const ConfirmationModal = ({ isOpen, onClose, onConfirm, message, showCancelButton }) => {
-  const [isBlueButtonHovered, setIsBlueButtonHovered] = useState(false);
-  const [isRedButtonHovered, setIsRedButtonHovered] = useState(false);
 
   const customStyles = {
     overlay: {
@@ -22,29 +19,6 @@ const ConfirmationModal = ({ isOpen, onClose, onConfirm, message, showCancelButt
       borderRadius: "10px", 
       padding: "50px"
     },
-    button: {
-      backgroundColor: isBlueButtonHovered ? "#0d6efd" : "#fff",
-      color: isBlueButtonHovered ? "#fff" : "#0d6efd",
-      paddingInline: "0.75rem",
-      paddingBlock: "0.375rem",
-      cursor: "pointer",
-      fontSize: "1rem",
-      borderRadius: "6px",
-      border: "2px solid #0d6efd",
-      marginTop: "8px",
-      transition: "color .2s ease-in-out,background-color .2s ease-in-out"
-    },
-    okButton: {
-      backgroundColor: isRedButtonHovered ? "red" : "#fff",
-      color: isRedButtonHovered ? "#fff" : "red",
-      border: "2px solid red",
-      paddingInline: "0.75rem",
-      paddingBlock: "0.375rem",
-      cursor: "pointer",
-      fontSize: "1rem",
-      borderRadius: "6px",
-      transition: "color .2s ease-in-out,background-color .2s ease-in-out"
-    }
   };
 
   return (
@@ -58,23 +32,10 @@ const ConfirmationModal = ({ isOpen, onClose, onConfirm, message, showCancelButt
         <p>{message}</p>
         { showCancelButton ? (
           <>
-          <button 
-            onMouseEnter={() => setIsRedButtonHovered(true)}
-            onMouseLeave={() => setIsRedButtonHovered(false)}
-            onClick={onConfirm} 
-            style={ customStyles.okButton }>Ok</button>
-          <button 
-            style={customStyles.button} 
-            onClick={onClose} 
-            onMouseEnter={() => setIsBlueButtonHovered(true)} 
-            onMouseLeave={() => setIsBlueButtonHovered(false)}>Cancel</button> 
+          <button className="btn-red" onClick={ onConfirm }>Ok</button>
+          <button className="btn-blue" onClick={ onClose }>Cancel</button> 
           </>
-        ) : <> <button
-            onMouseEnter={() => setIsBlueButtonHovered(true)}
-            onMouseLeave={() => setIsBlueButtonHovered(false)}
-            onClick={onClose} 
-            style={ customStyles.button }
-        >Ok</button>
+        ) : <> <button onClick={ onClose } className="btn-blue" >Ok</button>
         </> }
       </div>
     </ReactModal>
