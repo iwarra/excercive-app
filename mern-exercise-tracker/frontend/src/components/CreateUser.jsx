@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 import useUser from "../hooks/useUser";
 import ConfirmationModal from "./ConfirmationModal";
@@ -8,10 +8,26 @@ function CreateUser() {
   const { theme } = useContext(ThemeContext);
   const createLight = theme === "light";
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [ error, setError ] = useState(false);
+
+//updates the error state as soon as the input is valid  
+  useEffect(() => {
+    if (newUser.length >= 3) {
+      setError(false);
+    }
+  }, [newUser]);
 
   const handleCreateUser = (e) => {
+    if (error) {
+      e.preventDefault() 
+      return
+    }
     handleSubmit(e)
     setIsModalOpen(true);
+  };
+
+  const handleBlur = (e) => {
+    e.target.value.length < 3 ? setError(true) : setError(false)
   };
 
   return (
@@ -25,8 +41,10 @@ function CreateUser() {
                 required
                 className="form-control my-2"
                 value={ newUser }
-                onChange={(e) => addNewUser(e)}
+                onChange={ (e) => {addNewUser(e)} }
+                onBlur={ handleBlur }
                 />
+                 {error && <p style={{ color: 'red' }}>The username must contain at least three letters.</p>}
             <button 
               type="submit" 
               className="btn btn-primary mt-3"
@@ -36,8 +54,8 @@ function CreateUser() {
           </div>
         </form>
         <ConfirmationModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
+          isOpen={ isModalOpen }
+          onClose={ () => setIsModalOpen(false) }
           message="User added"
           showCancelButton={false}
         />
