@@ -25,7 +25,6 @@ const DeleteUser = () => {
       setConfirmationModalOpen(true)
     } else {
       setHasError(true)
-      return
     }
   }
 
@@ -42,6 +41,11 @@ const DeleteUser = () => {
       setHasError(false);
     }
   }, [])
+
+  //Resets the error state once the user is selected
+  useEffect(() => {
+    setHasError(false)
+  }, [selectedID])
 
   return (
     <div>
