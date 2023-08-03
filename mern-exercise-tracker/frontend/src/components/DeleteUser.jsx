@@ -61,7 +61,7 @@ const DeleteUser = () => {
       <ConfirmationModal
         isOpen={isConfirmationModalOpen}
         onClose={() => setConfirmationModalOpen(false)}
-        message="Are you sure you want to delete this user?"
+        message="Are you sure you want to delete this user and all of their exercises?"
         onConfirm={handleDeleteUser}
         showCancelButton={true}
       />
