@@ -3,9 +3,8 @@ import { useState, useEffect, useContext } from 'react';
 import { DataContext } from '../context/DataContext';
 
 const useUser = () => {
-  const { users, setUsers, setExercises, setExercise } = useContext(DataContext)
+  const { users, setUsers, exercises, setExercises, setExercise } = useContext(DataContext);
   const [newUser, setNewUser] = useState('');
-
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -27,10 +26,12 @@ const useUser = () => {
   } 
   
   const deleteUser = async (id) => {
-    //How to delete the exercises this user saved?
-    const userToDelete = users.find(user => user._id === id)
-    const username = userToDelete.username
     try {
+      const filteredExercises = exercises.filter(exercise => exercise.userID === id)
+      filteredExercises.forEach(exercise => axios.delete(`http://localhost:5000/exercises/${exercise._id}`)
+      ) 
+      setExercises(filteredExercises)
+
       const response = await axios.delete(`http://localhost:5000/users/${id}`);
       console.log(response.data)
       setUsers(prevUsers => prevUsers.filter(user => user._id !== id))
