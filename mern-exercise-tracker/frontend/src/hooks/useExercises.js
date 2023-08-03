@@ -109,11 +109,14 @@ const useExercises = () => {
   };
 
   const onChangeUsername = e => {
+    const username = e.target.value;
+    const user = users.find(user => user.username === username)
+
     setExercise(prevExercise => ({ 
       ...prevExercise,
-      username: e.target.value
+      username: e.target.value,
+      userID: user._id,
     }));
-
   };
 
   return { 
