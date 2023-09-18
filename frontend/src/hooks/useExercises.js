@@ -4,6 +4,10 @@ import axios from 'axios';
 import SingleExercise from '../components/SingleExercise';
 import { DataContext } from '../context/DataContext';
 
+const API_BASE_URL = process.env.NODE_ENV === 'development'
+  ? 'http://localhost:5000' // Local development URL
+  : 'https://exerciser.onrender.com'; // Production URL
+
 const useExercises = () => {
   const { setUser, users, setUsers, exercise, setExercise, exercises, setExercises } = useContext(DataContext); 
   
@@ -12,11 +16,11 @@ const useExercises = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const exercisesResponse = await axios.get('http://localhost:5000/exercises/');
+        const exercisesResponse = await axios.get(`${API_BASE_URL}/exercises/`);
         console.log('Fetched exercises: ', exercisesResponse.data);
         setExercises(exercisesResponse.data);
 
-        const usersResponse = await axios.get('http://localhost:5000/users/');
+        const usersResponse = await axios.get(`${API_BASE_URL}/users/`);
         if (usersResponse.data.length > 0) {
           console.log('Fetched users: ', usersResponse.data)
           setUsers(usersResponse.data);
@@ -31,7 +35,7 @@ const useExercises = () => {
 
   const deleteExercise = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/exercises/${id}`)
+      const response = await axios.delete(`${API_BASE_URL}/exercises/${id}`)
       console.log(response.data)
 
       setExercises(prevExercises => prevExercises.filter(el => el._id !== id));
@@ -63,9 +67,9 @@ const useExercises = () => {
 
     try {
       if (id) {
-        await axios.post(`http://localhost:5000/exercises/update/${id}`, exerciseObj);
+        await axios.post(`${API_BASE_URL}/exercises/update/${id}`, exerciseObj);
       } else {
-        await axios.post('http://localhost:5000/exercises/add', exerciseObj);
+        await axios.post(`${API_BASE_URL}/exercises/add`, exerciseObj);
       }
 
       //Reset after posting
