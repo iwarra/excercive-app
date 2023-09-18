@@ -17,12 +17,10 @@ const useExercises = () => {
     const fetchData = async () => {
       try {
         const exercisesResponse = await axios.get(`${API_BASE_URL}/exercises/`);
-        console.log('Fetched exercises: ', exercisesResponse.data);
         setExercises(exercisesResponse.data);
 
         const usersResponse = await axios.get(`${API_BASE_URL}/users/`);
         if (usersResponse.data.length > 0) {
-          console.log('Fetched users: ', usersResponse.data)
           setUsers(usersResponse.data);
         }
       } catch (error) {
