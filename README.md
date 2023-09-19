@@ -1,8 +1,9 @@
-# Getting Started with Create React App
+Fullstack MERN app that allows CRUD operations. Frontend is hosted on Netlify and backend on Render. 
+You can check out the project here: https://exerciser.netlify.app/  
+Please don't delete all dummy data. 
 
-This project was bootstrapped with [Create React App]
-(https://github.com/facebook/create-react-app).
 
+# Local environment
 ## Available Scripts
 
 In the project backend folder, you can run:
