@@ -8,7 +8,8 @@ const app = express();
 const port = process.env.PORT;
 
 const corsOptions = {
-	origin: ["http://localhost:3000", "https://exercizer.ivona.se/" ],
+	origin: ["http://localhost:3000", "https://exercizer.ivona.se/"],
+	credentials: true,
 };
 
 app.use(cors(corsOptions));
