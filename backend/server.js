@@ -8,7 +8,7 @@ const app = express();
 const port = process.env.PORT;
 
 const corsOptions = {
-	origin: ["http://localhost:3000", "https://exerciser.netlify.app"],
+	origin: ["http://localhost:3000", "https://exercizer.ivona.se/"],
 };
 
 app.use(cors(corsOptions));
