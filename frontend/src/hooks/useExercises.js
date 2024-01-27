@@ -1,137 +1,149 @@
-import { useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import SingleExercise from '../components/SingleExercise';
-import { DataContext } from '../context/DataContext';
+import { useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import SingleExercise from "../components/SingleExercise";
+import { DataContext } from "../context/DataContext";
+const port = 5001;
 
-const API_BASE_URL = process.env.NODE_ENV === 'development'
-  ? 'http://localhost:5000' // Local development URL
-  : 'https://exerciser.onrender.com'; // Production URL
+const API_BASE_URL =
+	process.env.NODE_ENV === "development"
+		? `http://localhost:${port}` // Local development URL
+		: "https://exerciser.onrender.com"; // Production URL
 
 const useExercises = () => {
-  const { setUser, users, setUsers, exercise, setExercise, exercises, setExercises } = useContext(DataContext); 
-  
-  const navigate = useNavigate();
+	const {
+		setUser,
+		users,
+		setUsers,
+		exercise,
+		setExercise,
+		exercises,
+		setExercises,
+	} = useContext(DataContext);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const exercisesResponse = await axios.get(`${API_BASE_URL}/exercises/`);
-        setExercises(exercisesResponse.data);
+	const navigate = useNavigate();
 
-        const usersResponse = await axios.get(`${API_BASE_URL}/users/`);
-        if (usersResponse.data.length > 0) {
-          setUsers(usersResponse.data);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const exercisesResponse = await axios.get(`${API_BASE_URL}/exercises/`);
+				setExercises(exercisesResponse.data);
 
-    fetchData();
-  }, []);
+				const usersResponse = await axios.get(`${API_BASE_URL}/users/`);
+				if (usersResponse.data.length > 0) {
+					setUsers(usersResponse.data);
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		};
 
-  const deleteExercise = async (id) => {
-    try {
-      const response = await axios.delete(`${API_BASE_URL}/exercises/${id}`)
-      console.log(response.data)
+		fetchData();
+	}, []);
 
-      setExercises(prevExercises => prevExercises.filter(el => el._id !== id));
-    } catch (error) {
-      console.log(error)
-    }
-  }
+	const deleteExercise = async (id) => {
+		try {
+			const response = await axios.delete(`${API_BASE_URL}/exercises/${id}`);
+			console.log(response.data);
 
-  const createExerciseList = () => {
-    return exercises.map(currentExercise => (
-      <SingleExercise
-        exercise={currentExercise}
-        deleteExercise={deleteExercise}
-        key={currentExercise._id}
-      />
-    ));
-  };
+			setExercises((prevExercises) =>
+				prevExercises.filter((el) => el._id !== id),
+			);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
-  const handleSubmit = async (e, id) => {
-    e.preventDefault();
+	const createExerciseList = () => {
+		return exercises.map((currentExercise) => (
+			<SingleExercise
+				exercise={currentExercise}
+				deleteExercise={deleteExercise}
+				key={currentExercise._id}
+			/>
+		));
+	};
 
-    const exerciseObj = {
-      userID: exercise.userID,
-      username: exercise.username,
-      description: exercise.description,
-      duration: exercise.duration,
-      date: exercise.date,
-    };
+	const handleSubmit = async (e, id) => {
+		e.preventDefault();
 
-    try {
-      if (id) {
-        await axios.post(`${API_BASE_URL}/exercises/update/${id}`, exerciseObj);
-      } else {
-        await axios.post(`${API_BASE_URL}/exercises/add`, exerciseObj);
-      }
+		const exerciseObj = {
+			userID: exercise.userID,
+			username: exercise.username,
+			description: exercise.description,
+			duration: exercise.duration,
+			date: exercise.date,
+		};
 
-      //Reset after posting
-      setExercise({
-        userID: "",
-        username:"",
-        description: "",
-        duration: 0,
-        date: new Date()
-      })
-      setUser({
-        username: "",
-        userID: ""
-      })
-    
-      navigate('/');
-    } catch (error) {
-      console.log(error);
-    }
-  }
+		try {
+			if (id) {
+				await axios.post(`${API_BASE_URL}/exercises/update/${id}`, exerciseObj);
+			} else {
+				await axios.post(`${API_BASE_URL}/exercises/add`, exerciseObj);
+			}
 
-  const onChangeDescription = e => {
-    setExercise(prevExercise => ({ 
-      ...prevExercise,
-      description: e.target.value
-    }));
-  };
+			//Reset after posting
+			setExercise({
+				userID: "",
+				username: "",
+				description: "",
+				duration: 0,
+				date: new Date(),
+			});
+			setUser({
+				username: "",
+				userID: "",
+			});
 
-  const onChangeDuration = e => {
-     setExercise(prevExercise => ({ 
-      ...prevExercise,
-      duration: e.target.value
-    }));
-  };
+			navigate("/");
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
-  const onChangeDate = date => {
-     setExercise(prevExercise => ({ 
-      ...prevExercise,
-      date: date
-    }));
-  };
+	const onChangeDescription = (e) => {
+		setExercise((prevExercise) => ({
+			...prevExercise,
+			description: e.target.value,
+		}));
+	};
 
-  const onChangeUsername = e => {
-    const username = e.target.value;
-    const user = users.find(user => user.username === username)
+	const onChangeDuration = (e) => {
+		setExercise((prevExercise) => ({
+			...prevExercise,
+			duration: e.target.value,
+		}));
+	};
 
-    setExercise(prevExercise => ({ 
-      ...prevExercise,
-      username: e.target.value,
-      userID: user._id,
-    }));
-  };
+	const onChangeDate = (date) => {
+		setExercise((prevExercise) => ({
+			...prevExercise,
+			date: date,
+		}));
+	};
 
-  return { 
-          createExerciseList, 
-          deleteExercise, 
-          handleSubmit, 
-          exercises,
-          users, 
-          onChangeUsername,
-          onChangeDate, 
-          onChangeDuration, 
-          onChangeDescription,
-        };
+	const onChangeUsername = (e) => {
+		const username = e.target.value;
+		const user = users.find((user) => user.username === username);
+
+		setExercise((prevExercise) => ({
+			...prevExercise,
+			username: e.target.value,
+			userID: user._id,
+		}));
+	};
+
+	return {
+		createExerciseList,
+		deleteExercise,
+		handleSubmit,
+		exercises,
+		users,
+		onChangeUsername,
+		onChangeDate,
+		onChangeDuration,
+		onChangeDescription,
+	};
 };
 
 export default useExercises;
