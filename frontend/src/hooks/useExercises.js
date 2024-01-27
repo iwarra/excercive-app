@@ -7,8 +7,8 @@ const port = 5001;
 
 const API_BASE_URL =
 	process.env.NODE_ENV === "development"
-		? `http://localhost:${port}` // Local development URL
-		: "https://exerciser.onrender.com"; // Production URL
+		? process.env.REACT_APP_DEV_URL // Local development URL
+		: process.env.REACT_APP_PROD_URL; // Production URL
 
 const useExercises = () => {
 	const {
