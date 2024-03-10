@@ -1,25 +1,18 @@
-import { useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import SingleExercise from "../components/SingleExercise";
-import { DataContext } from "../context/DataContext";
+import { useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import SingleExercise from '../components/SingleExercise';
+import { DataContext } from '../context/DataContext';
 const port = 5001;
 
 const API_BASE_URL =
-	process.env.NODE_ENV === "development"
+	process.env.NODE_ENV === 'development'
 		? process.env.REACT_APP_DEV_URL // Local development URL
 		: process.env.REACT_APP_PROD_URL; // Production URL
 
 const useExercises = () => {
-	const {
-		setUser,
-		users,
-		setUsers,
-		exercise,
-		setExercise,
-		exercises,
-		setExercises,
-	} = useContext(DataContext);
+	const { setUser, users, setUsers, exercise, setExercise, exercises, setExercises } =
+		useContext(DataContext);
 
 	const navigate = useNavigate();
 
@@ -46,9 +39,7 @@ const useExercises = () => {
 			const response = await axios.delete(`${API_BASE_URL}/exercises/${id}`);
 			console.log(response.data);
 
-			setExercises((prevExercises) =>
-				prevExercises.filter((el) => el._id !== id),
-			);
+			setExercises((prevExercises) => prevExercises.filter((el) => el._id !== id));
 		} catch (error) {
 			console.log(error);
 		}
@@ -84,18 +75,18 @@ const useExercises = () => {
 
 			//Reset after posting
 			setExercise({
-				userID: "",
-				username: "",
-				description: "",
+				userID: '',
+				username: '',
+				description: '',
 				duration: 0,
 				date: new Date(),
 			});
 			setUser({
-				username: "",
-				userID: "",
+				username: '',
+				userID: '',
 			});
 
-			navigate("/");
+			navigate('/');
 		} catch (error) {
 			console.log(error);
 		}
