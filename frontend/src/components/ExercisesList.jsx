@@ -26,9 +26,9 @@ const ExercisesList = () => {
 					<table className={tableLight ? 'table table-striped' : 'table table-striped table-dark'}>
 						<thead className={tableLight ? 'thead-light' : 'thead-dark'}>
 							<tr>
-								<th>Username</th>
-								<th>Description</th>
-								<th>Duration</th>
+								<th>User</th>
+								<th>Workout</th>
+								<th>Time</th>
 								<th>Date</th>
 								<th>Actions</th>
 							</tr>
