@@ -1,6 +1,6 @@
-import './App.css';
+import './App.scss';
 import { Routes, Route } from 'react-router-dom';
-import "bootstrap/dist/css/bootstrap.min.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ThemeProvider } from './context/ThemeContext';
 import { DataProvider } from './context/DataContext';
@@ -14,27 +14,45 @@ import NavbarComponent from './components/NavbarComponent';
 import DeleteUser from './components/DeleteUser';
 import NotFound from './components/NotFound';
 
-
 function App() {
-  return (
-    <div className="container">
-        <ThemeProvider>
-          <DataProvider>
-          <NavbarComponent />
-          <ErrorBoundary FallbackComponent={ErrorFallback}>
-            <Routes>
-              <Route path="/" exact element={<ExercisesList/>}/>
-              <Route path="/edit/:id" element={<EditExercise/>}/>
-              <Route path="/create" element={<CreateExercise/>}/>
-              <Route path="/user" element={<CreateUser/>}/>
-              <Route path="/delete" element={<DeleteUser/>}/>
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </ErrorBoundary>
-          </DataProvider>
-        </ThemeProvider>
-      </div>
-  );
+	return (
+		<div className='container-sm'>
+			<ThemeProvider>
+				<DataProvider>
+					<NavbarComponent />
+					<ErrorBoundary FallbackComponent={ErrorFallback}>
+						<Routes>
+							<Route
+								path='/'
+								exact
+								element={<ExercisesList />}
+							/>
+							<Route
+								path='/edit/:id'
+								element={<EditExercise />}
+							/>
+							<Route
+								path='/create'
+								element={<CreateExercise />}
+							/>
+							<Route
+								path='/user'
+								element={<CreateUser />}
+							/>
+							<Route
+								path='/delete'
+								element={<DeleteUser />}
+							/>
+							<Route
+								path='*'
+								element={<NotFound />}
+							/>
+						</Routes>
+					</ErrorBoundary>
+				</DataProvider>
+			</ThemeProvider>
+		</div>
+	);
 }
 
 export default App;
