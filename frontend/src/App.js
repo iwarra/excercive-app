@@ -16,7 +16,7 @@ import NotFound from './components/NotFound';
 
 function App() {
 	return (
-		<div className='container-sm'>
+		<div className='container-sm pb-5'>
 			<ThemeProvider>
 				<DataProvider>
 					<NavbarComponent />
