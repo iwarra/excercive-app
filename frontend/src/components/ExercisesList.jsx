@@ -1,31 +1,44 @@
 import useExercises from '../hooks/useExercises';
-import { useContext } from "react";
-import { ThemeContext } from "../context/ThemeContext";
+import { useContext, useEffect } from 'react';
+import { ThemeContext } from '../context/ThemeContext';
+import { useState } from 'react';
+import { ThreeDots } from 'react-loader-spinner';
 
 const ExercisesList = () => {
-  const { createExerciseList } = useExercises();
-  const { theme } = useContext(ThemeContext);
-  const tableLight = theme === "light";
+	const [isLoading, setIsLoading] = useState(true);
+	const { createExerciseList } = useExercises();
+	const { theme } = useContext(ThemeContext);
+	const tableLight = theme === 'light';
 
-  return (
-    <div>
-      <h1 className={tableLight ? "h3 mb-3 text-dark" : "h3 mb-3 text-light"}>Logged Exercises</h1>
-      <table className={tableLight ? "table table-striped" : "table table-striped table-dark"}>
-        <thead className={tableLight ? "thead-light" : "thead-dark"}>
-          <tr>
-            <th>Username</th>
-            <th>Description</th>
-            <th>Duration</th>
-            <th>Date</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          { createExerciseList() }
-        </tbody>
-      </table>
-    </div>
-  );
+	useEffect(() => {
+		if (createExerciseList()) {
+			setIsLoading(false);
+		}
+	}, [setIsLoading, createExerciseList]);
+
+	return (
+		<div>
+			<h1 className={tableLight ? 'h3 mb-3 text-dark' : 'h3 mb-3 text-light'}>Logged Exercises</h1>
+			<div>
+				{isLoading ? (
+					<ThreeDots color='#0d6efd'></ThreeDots>
+				) : (
+					<table className={tableLight ? 'table table-striped' : 'table table-striped table-dark'}>
+						<thead className={tableLight ? 'thead-light' : 'thead-dark'}>
+							<tr>
+								<th>Username</th>
+								<th>Description</th>
+								<th>Duration</th>
+								<th>Date</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>{createExerciseList()}</tbody>
+					</table>
+				)}
+			</div>
+		</div>
+	);
 };
 
 export default ExercisesList;
