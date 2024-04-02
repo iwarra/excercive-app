@@ -11,7 +11,7 @@ const ExercisesList = () => {
 	const tableLight = theme === 'light';
 
 	useEffect(() => {
-		if (createExerciseList()) {
+		if (createExerciseList().length) {
 			setIsLoading(false);
 		}
 	}, [setIsLoading, createExerciseList]);

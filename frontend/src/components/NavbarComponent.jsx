@@ -31,14 +31,14 @@ function NavbarComponent() {
 				</Link>
 				<button
 					onClick={toggleNavbar}
-					class='collapsed navbar-toggler nav-btn'
+					className='collapsed navbar-toggler nav-btn'
 					type='button'
 					data-bs-toggle='collapse'
 					data-bs-target='#navbarSupportedContent'
 					aria-controls='navbarSupportedContent'
 					aria-expanded='false'
 					aria-label='Toggle navigation'>
-					<span class='navbar-toggler-icon'></span>
+					<span className='navbar-toggler-icon'></span>
 				</button>
 				<div
 					className='collapse navbar-collapse'
